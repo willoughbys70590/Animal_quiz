@@ -36,7 +36,9 @@ class Start:
 
         self.start_quiz_button.config(state=NORMAL)
 
-    def to_Question(self, prevent):
+    def Question(self, prevent, start_quiz_button):
+        
+        Question(self,start_quiz_button,Animal_instructions, )
 
   
 # the Question function is to show the questions and how they are generated 
