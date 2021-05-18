@@ -2,6 +2,27 @@ from tkinter import *
 from functools import partial  # To prevent unwanted windows
 import random
 
+# The start function is to show the title of the quiz little instructions  and a start button
+class Start:
+    def __init__(self, prevent):
+        # Make the starting frame and how wide and height is going to be
+        self.start_frame = Frame(padx=10, pady=10)
+        self.start_frame.grid()
+
+        # Mystery Heading (row 0)
+        self .Animal_quiz_label = Label(self.start_frame, text="Animal Quiz",
+                                        font="Arial 19 bold")
+        self.Animal_quiz_label.grid(row=1)
+
+        # Help Button
+        self.help_button = Button(self.start_frame, text="Help",
+                                  command=self.to_help)
+        self.help_button.grid(row=2, pady=10)
+
+    def to_help(self):
+        get_help = Help(self)
+
+# if they get stuck they can click the help button and it will give them the instructions 
 class Help:
     def __init__(self, partner):
 
@@ -23,22 +44,12 @@ class Help:
                                  font="arial 14 bold")
         self.how_heading.grid(row=0)
 
-        help_text="Choose an amount to play with and then chose the stakes. " \
-                  "Higher stakes cost more per round but you can win more as " \
-                  "well.\n\n" \
-                  "When you enter the play area, you will see three mystery " \
-                  "boxes. To reavel the contents of the boxes click the " \
-                  "Open Boxes' button. id you don't have enough money to play, " \
-                  "the button will turn red and you will need to quit the " \
-                  "game. \n\n" \
-                  "The contents of the boxes will be added to your balance. " \
-                  "The boxes could contain...\n\n" \
-                  "Low: Lead ($0) | copper ($1) | silver ($2) | Gold ($10)\n" \
-                  "Medium: Lead ($0) | copper ($2) | silver ($4) | Gold ($25)\n" \
-                  "High: Lead ($0) | copper ($5) | silver ($10) | Gold ($50)\n\n" \
-                  "If each box contains gold, you earn $30 (low stakes). If " \
-                  "they contained copper, silver and gold, you would receive" \
-                  "$13 ($1 + $2 + $10) and so on."
+        help_text="To start the quiz first you need to press the satrt button."\
+                    "After you have pressed the start button you will then have to"\
+                    "answear the question. The Adult annimal name will keep "\
+                    "changing so you will need to keep finding out what the baby name"\
+                    "is. You will only get 5 turns."
+                  
 
         # Help text (label, row 1)
         self.help_text = Label(self.help_frame, text=help_text,
