@@ -4,7 +4,7 @@ import random
 
 # The start function is to show the title of the quiz little instructions  and a start button
 class Start:
-    def __init__(self, prevent,):
+    def __init__(self, prevent):
         # Make the starting frame and how wide and height is going to be
         self.start_frame = Frame(padx=10, pady=10)
         self.start_frame.grid()
@@ -12,7 +12,7 @@ class Start:
         # Animal quiz heading, make sure its in the center,text size is readerable and colour
         # Heading in row 0
         self.Animal_quiz_label = Label(self.start_frame,
-                                       text="Animal quiz",
+                                       text="Animal Quiz",
                                        font="Arial 25 bold")
         self.Animal_quiz_label.grid(row=0)
 
@@ -25,7 +25,7 @@ class Start:
         self.Animal_instrustions.grid(row=1)
 
         # Button font goes here
-        button_font = "Arial 17 bold"
+        button_font = "Arial 15 bold"
 
         # The start button to start the questions
         self.start_quiz_button = Button(self.start_frame, text="start",
@@ -36,7 +36,7 @@ class Start:
         self.start_quiz_button.config(state=NORMAL)
 
     def to_quiz(self):
-        get_quiz = Quiz(self)
+        get_quiz = Question(self)
 
        
 # main routine
