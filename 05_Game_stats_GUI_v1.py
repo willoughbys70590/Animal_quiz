@@ -5,37 +5,26 @@ import random
 class GameStats:
     def __init__(self, partner, game_history, game_stats):
 
-        print(game_history)
 
-        # disable help button
-        partner.stats_button.config(state=DISABLED)
-
-        heading = "Arial 12 bold"
-        content = "Arial 12"
 
         # Set up child window (ie: help box)
         self.stats_box = Toplevel()
 
-        # If users press cross at top, closes help and 'releases' help button
-
-        self.stats_box.protocol('WM_DELETE_WINDOW', partial(self.close_stats,
-                                                            partner))
-
         # Set up GUI Frame
-        self.stats_frame = Frame(self.stats_box)
-        self.stats_frame.grid()
+        self.stats_box = Frame(self.stats_box)
+        self.stats_box.grid()
 
         # Set up Help heading (row 0)
-        self.stats_heading_label = Label(self.stats_frame, text="Game Statistics",
+        self.stats_heading_label = Label(self.stats_box, text="Game Statistics",
                                          font="arial 19 bold")
         self.stats_heading_label.grid(row=0)
 
         # To Export <instructions> (row 1)
-        self.export_instructions = Label(self.stats_frame,
+        self.export_instructions = Label(self.stats_box,
                                          text="Here are your Game Statistics."
                                               "Please use the Export button to "
                                               "access the results of each "
-                                              "round that you played", wrap=250,
+                                              "question you did", wrap=250,
                                          font="arial 10 italic",
                                          justify=LEFT, fg="green",
                                          padx=10, pady=10)
@@ -43,7 +32,7 @@ class GameStats:
 
 
         # Starting balance (row 2)
-        self.details_frame = Frame(self.stats_frame)
+        self.details_frame = Frame(self.stats_box)
         self.details_frame.grid(row=2)
 
         # Starting balance (row 2.0)

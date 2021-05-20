@@ -39,6 +39,7 @@ class Question:
 
         self.q_adult = StringVar()
         self.a_baby = StringVar()
+        self.txt_box = StringVar()
 
         # The heading row to play the quiz
         self.heading_label = Label(self.quiz_box, text="Time to start the quiz on how well you know\n"
@@ -106,7 +107,7 @@ class Question:
     def check_answer(self):
 
         answer = self.a_baby.get()
-        print("You pushed the check answer button", answer)
+        print("Check answer:", answer)
 
 # main routine
 if __name__ == "__main__":
