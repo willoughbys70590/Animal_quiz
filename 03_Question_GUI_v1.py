@@ -39,7 +39,6 @@ class Question:
 
         self.q_adult = StringVar()
         self.a_baby = StringVar()
-        self.txt_box = StringVar()
 
         # The heading row to play the quiz
         self.heading_label = Label(self.quiz_box, text="Time to start the quiz on how well you know\n"
@@ -60,10 +59,9 @@ class Question:
         self.text_box_frame = Frame(self.quiz_box, width=200)
         self.text_box_frame.grid(row=4, column=0)
 
-        self.Answear_box_entry = Entry(self.text_box_frame,
-                                        font="Arial 19 bold", width=10)
-        self.Answear_box_entry.grid(row=4, column=0)
-
+        self.Answear_box = Entry(self.text_box_frame,
+                                font="Arial 19 bold", width=10)
+        self.Answear_box.grid(row=4, column=0)
 
         with open('animal_list.csv', newline='') as f:
             reader = csv.reader(f)
@@ -106,6 +104,11 @@ class Question:
 
     def check_answer(self):
 
+        # printing your answaer that you have put in 
+        Answear_num = self.Answear_box.get()
+        print("Your Answear:", Answear_num)
+        
+        # The real answear from my csv list 
         answer = self.a_baby.get()
         print("Check answer:", answer)
 
