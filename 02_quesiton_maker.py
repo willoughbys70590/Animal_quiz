@@ -3,7 +3,7 @@ import random
 
 import csv
 
-with open('Animal_list.csv', newline='') as f:
+with open('animal_list.csv', newline='') as f:
     reader = csv.reader(f)
     Animal_list = list(reader)
 

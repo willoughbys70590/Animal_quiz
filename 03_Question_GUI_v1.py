@@ -1,71 +1,112 @@
 from tkinter import *
 from functools import partial  # To prevent unwanted windows
 import random
+import csv
 
-
-# The start function is to show the title of the quiz little instructions  and a start button
 class Start:
-    def __init__(self, prevent):
-        # Make the starting frame and how wide and height is going to be
+    def __init__(self, parent):
+
+        # GUI to get starting balance and stakes
         self.start_frame = Frame(padx=10, pady=10)
         self.start_frame.grid()
 
-        # Animal quiz heading, make sure its in the center,text size is readerable and colour
-        # Heading in row 0
-        self.Animal_quiz_label = Label(self.start_frame,
-                                       text="Animal Quiz",
-                                       font="Arial 20 bold")
-        self.Animal_quiz_label.grid(row=0)
+        self.num_questions = Entry(self.start_frame, text="5")
+        self.num_questions.grid(row=0, pady=10)
 
-        # The first set of instructions that you will need to follow
-        # Sub-title in row 1
-        self.Animal_instrustions = Label(self.start_frame, font="Arial 12 italic",
-                                        text="To start the quiz press "
-                                        " the start button to start.",
-                                        wrap=275, justify=LEFT, padx=10, pady=10)
-        self.Animal_instrustions.grid(row=1)
+        self.push_me_button = Button(text="Push me", command=self.to_question)
+        self.push_me_button.grid(row=1, pady=10)
 
-        # Button font goes here
-        button_font = "Arial 15 bold"
+    def to_question(self):
+        # retrieve # of questions balance
+        question_number = self.num_questions.get()
+        print(question_number)
 
-        # The start button to start the questions
-        self.start_quiz_button = Button(self.start_frame, text="start",
-                                command=self.to_quiz,
-                            font=button_font)
-        self.start_quiz_button.grid(row=4,column=0,pady=10)
+        Question(self, partial)
 
-        self.start_quiz_button.config(state=NORMAL)
+        # hide start up window
+        root.withdraw()
 
-    def Question(self, prevent, start_quiz_button):
-        
-        Question(self,start_quiz_button,Animal_instructions, )
 
-  
 # the Question function is to show the questions and how they are generated 
 # make sure its not going in alphabet order .
 class Question:
-    def __init__(self, prevent, to_Question):
 
-        # making the question frame of the Starting of the quiz 
-        self.Question_frame = Frame(padx=10, pady=10)
-        self.Question_frame.grid()
+    def __init__(self, prevent, parent):
 
-        # input the question maker and and the fit it into the frame
-        # code to import the list and make sure it only says the Adult name not the baby name also
+        self.quiz_box = Toplevel()
+        self.quiz_frame = Frame(self.quiz_box)
+        self.quiz_frame.grid()
 
-        self.Animal_quiz_label = Label(self.Question_frame,
-                                text="Animal Quiz",
-                                font="Arial 15 bold")
-        self.Animal_quiz_label.grid(row=1)
+        self.q_adult = StringVar()
+        self.a_baby = StringVar()
+
+        # The heading row to play the quiz
+        self.heading_label = Label(self.quiz_box, text="Time to start the quiz on how well you know\n"
+                                                        " whats the name of the baby animals is.",
+                                                    font="Arial 10", padx=15, pady=15)
+        self.heading_label.grid(row=0)
 
         # put the question in and make the adult animal keep chaning
         # Also need to put a textbox in so they can put there answear in.
         
-        self.Ask_question_label = label(self.Question_frame, text="What is the name for a young?",
-                                font="arial 14 bold")
-        self.Ask_question_label.grid(row=3)
-        
+        self.question_label = Label(self.quiz_box, text="Push next to begin your first Question",
+                                    font="arial 14 bold")
+        self.question_label.grid(row=2)
 
+        # code to import the list and make sure it only says the Adult name not the baby name also
+
+        # text box for the answears (row 4)
+        self.text_box_frame = Frame(self.quiz_box, width=200)
+        self.text_box_frame.grid(row=4, column=0)
+
+        self.Answear_box_entry = Entry(self.text_box_frame,
+                                        font="Arial 19 bold", width=10)
+        self.Answear_box_entry.grid(row=4, column=0)
+
+
+        with open('animal_list.csv', newline='') as f:
+            reader = csv.reader(f)
+            animal_list = list(reader)
+
+        # next export frame
+        self.next_export_frame = Frame(self.quiz_box)
+        self.next_export_frame.grid(row=5,pady=10, column=0)
+
+        self.next_button = Button(self.next_export_frame, text="next",
+                                  justify=LEFT,
+                                  command=lambda: self.make_question(animal_list),
+                                  pady=10, width=10, font="Arial 10 bold")
+        self.next_button.grid(row=5, padx=5)
+
+        # Check answear export frame
+        self.Check_answear_export_frame = Frame(self.quiz_box)
+        self.Check_answear_export_frame.grid(row=6, pady=10)
+
+        self.Check_answear_button = Button(self.Check_answear_export_frame,
+                                           text="Check answear",
+                                           font="Arial 10 bold",
+                                           command=self.check_answer,
+                                           padx=10, pady=10)
+        self.Check_answear_button.grid(row=6, pady=5)
+
+    def make_question(self, question_list):
+
+        pair = random.choice(question_list)
+        adult = pair[0]
+        answer = pair[1]
+
+        # put question and answer in string variable so we can use it in checking function
+        self.a_baby.set(answer)
+
+        self.question_label.config(text="What is the name for a young?"
+                                    "\n {}".format(adult))
+        # print(adult)
+        # print("answer", answer)
+
+    def check_answer(self):
+
+        answer = self.a_baby.get()
+        print("You pushed the check answer button", answer)
 
 # main routine
 if __name__ == "__main__":

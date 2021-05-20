@@ -31,19 +31,33 @@ class Start:
         self.start_quiz_button = Button(self.start_frame, text="start", bg="#4da6ff",
                                 command=self.to_quiz,
                             font=button_font)
-        self.start_quiz_button.grid(row=3,column=0,pady=10)
+        self.start_quiz_button.grid(row=4, pady=10)
 
         self.start_quiz_button.config(state=NORMAL)
-
+        
+        
         # Help Button
-        self.help_button = Button(self.start_frame, text="Help", bg="#ffc34d",
-                                  command=self.to_help)
-        self.help_button.grid(row=4, pady=10)
+        self.help_export_frame = Frame(self.start_frame)
+        self.help_export_frame.grid(row=5, pady=10)
+
+        self.help_button = Button(self.help_export_frame,                           text="Help", bg="#ffc34d",
+                              font="Arial 15 bold"
+                              ,command=self.to_help,
+                              pady=10, width=10)
+        self.help_button.grid(row=5, column=1)
+
+        # Quit button
+        self.quit_button = Button(self.help_export_frame, text="Quit", fg="white",
+                                bg="#660000", font="Arial 15 bold",
+                                command=self.to_quit, pady=10, width=10,
+                                justify="left")
+        self.quit_button.grid(row=5, pady=10, column=0)
 
     def to_quiz(self):
         get_quiz = Question()
 
-
+    def to_quit(self):
+        root.destroy()
 
     def to_help(self):
         get_help = Help(self)
@@ -63,7 +77,7 @@ class Help:
         self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, partner))
 
         # Set up GUI frame
-        self.start_frame = Frame(self.help_box, width=300)
+        self.start_frame = Frame(self.help_box, width=100)
         self.start_frame.grid()
 
         # Set up help heading (row 0 )
