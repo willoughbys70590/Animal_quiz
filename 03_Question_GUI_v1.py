@@ -84,7 +84,7 @@ class Question:
         self.Check_answear_button = Button(self.Check_answear_export_frame,
                                            text="Check answear",
                                            font="Arial 10 bold",
-                                           command=self.check_answer,
+                                           command=self.check_answear,
                                            padx=10, pady=10)
         self.Check_answear_button.grid(row=6, pady=5)
 
@@ -92,28 +92,32 @@ class Question:
 
         pair = random.choice(question_list)
         adult = pair[0]
-        answer = pair[1]
+        answear = pair[1]
 
-        # put question and answer in string variable so we can use it in checking function
-        self.a_baby.set(answer)
+        # put question and answear in string variable so we can use it in checking function
+        self.a_baby.set(answear)
 
         self.question_label.config(text="What is the name for a young?"
                                     "\n {}".format(adult))
         # print(adult)
-        # print("answer", answer)
+        # print("answear", answear)
 
-    def check_answer(self):
-
-        # printing your answaer that you have put in 
-        answear_num = self.answear_box.get()
-        print("Your Answear:", Answear_num)
+    def check_answear(self):
         
         # The real answear from my csv list 
-        answer = self.a_baby.get()
-        print("Check answer:", answer)
-    
-    if answear_num == answear:
-        print ("correct")
+        answear = self.a_baby.get()
+        print("Check answear:", answear)
+
+        
+        # printing your answaer that you have put in 
+        answear_num = self.answear_box.get()
+        print("Your Answear:", answear_num)
+
+        if answear == answear_num:
+          print("correct")
+        elif answear != answear_num:
+            print("wrong")
+            
 
 # main routine
 if __name__ == "__main__":
