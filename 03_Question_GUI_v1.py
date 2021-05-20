@@ -59,9 +59,9 @@ class Question:
         self.text_box_frame = Frame(self.quiz_box, width=200)
         self.text_box_frame.grid(row=4, column=0)
 
-        self.Answear_box = Entry(self.text_box_frame,
+        self.answear_box = Entry(self.text_box_frame,
                                 font="Arial 19 bold", width=10)
-        self.Answear_box.grid(row=4, column=0)
+        self.answear_box.grid(row=4, column=0)
 
         with open('animal_list.csv', newline='') as f:
             reader = csv.reader(f)
@@ -105,12 +105,15 @@ class Question:
     def check_answer(self):
 
         # printing your answaer that you have put in 
-        Answear_num = self.Answear_box.get()
+        answear_num = self.answear_box.get()
         print("Your Answear:", Answear_num)
         
         # The real answear from my csv list 
         answer = self.a_baby.get()
         print("Check answer:", answer)
+    
+    if answear_num == answear:
+        print ("correct")
 
 # main routine
 if __name__ == "__main__":
