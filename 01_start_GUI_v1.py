@@ -110,31 +110,6 @@ class Help:
         partner.help_button.config(state=NORMAL)
         self.help_box.destroy()
 
-# the Question function is to show the questions and how they are generated 
-# make sure its not going in alphabet order .
-class Question:
-    def __init__(self):
-
-        # making the question frame of the Starting of the quiz 
-        self.Question_frame = Frame(padx=10, pady=10)
-        self.Question_frame.grid()
-
-        # input the question maker and and the fit it into the frame
-        # code to import the list and make sure it only says the Adult name not the baby name also
-
-        self.Animal_quiz_label = Label(self.Question_frame,
-                                text="Animal Quiz",
-                                font="Arial 15 bold")
-        self.Animal_quiz_label.grid(row=1)
-
-        # put the question in and make the adult animal keep chaning
-        # Also need to put a textbox in so they can put there answear in.
-        
-        self.Ask_question_label = label(self.Question_frame, text="What is the name for a young?",
-                                font="arial 14 bold")
-        self.Ask_question_label.grid(row=3)
-        
-
 # main routine
 if __name__ == "__main__":
     root = Tk()
