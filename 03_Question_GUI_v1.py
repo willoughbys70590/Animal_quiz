@@ -13,7 +13,8 @@ class Start:
         self.starting_funds = IntVar(0)
 
         self.heading_label = Label(self.start_frame,
-                                   text="how many questions\n"                                          "do you want you can\n"
+                                   text="how many questions\n"
+                                        "do you want you can\n"
                                         "only pick between 5&10.",
                                    font="arial 10 bold")
         self.heading_label.grid(row=0)
@@ -35,36 +36,6 @@ class Start:
                                         text="", font="Arial 10 bold", wrap=275,
                                         justify=LEFT)
         self.amount_error_label.grid(row=1, columnspan=2, pady=5)
-
-
-    def Number_questions(self):
-        error_back = "#ffafaf"
-        starting_number = [0]
-
-        try:
-            starting_number = int(starting_number)
-
-            if starting_number < 1:
-                has_errors = "yes"
-                error_feedback = "Sorry the you need to \n" \
-                                 "complete atleast one question."
-            elif starting_number > 10:
-                has_errors ="yes"
-                error_feedback = " Too high! there are only 10/n" \
-                                 "questions"
-
-        except ValueError:
-            has_errors ="yes"
-            error_feedback ="plaase do atleast one question (no numbers / decimals)"
-
-            if has_errors == "yes":
-                self.num_questions.config(bg=error_back)
-                self.amount_error_label.config(text=error_feedback)
-            else:
-                self.starting_funds.set(starting_number)
-
-                Start(starting_number)
-
 
     def to_question(self):
         # retrieve # of questions balance
@@ -139,7 +110,7 @@ class Question:
         self.Check_answer_button = Button(self.Check_answer_export_frame,
                                            text="Check answer",
                                            font="Arial 10 bold",
-                                           command=self.check_answer,
+                                           command=self.check_answear,
                                            padx=10, pady=10)
         self.Check_answer_button.grid(row=5, pady=5)
 
@@ -147,24 +118,35 @@ class Question:
 
         pair = random.choice(question_list)
         adult = pair[0]
-        answer = pair[1]
+        answear = pair[1]
 
-        # put question and answer in string variable so we can use it in checking function
-        self.a_baby.set(answer)
+        # put question and answear in string variable so we can use it in checking function
+        self.a_baby.set(answear)
 
         self.question_label.config(text="What is the name for a young?"
                                         "\n {}".format(adult))
         # print(adult)
-        # print("answer", answer)
+        # print("answear", answear)
+
+    def check_answear(self):
+
+        # The real answear from my csv list
+        answear = self.a_baby.get()
+        print("Check answear:", answear)
+
+        # printing your answaer that you have put in
+        answear_num = self.answear_box.get()
+        print("Your Answear:", answear_num)
 
     def check_answer(self):
-        
+
         correct_ans = " "
         wrong_ans = " "
 
-        # The real answer from my csv list
-        answer = self.a_baby.get()
-        print("Check answer:", answer)
+        if answear == answear_num:
+          print("correct")
+        elif answear != answear_num:
+            print("wrong")
 
         # printing your answaer that you have put in
         user_ans = self.answer_box.get()
