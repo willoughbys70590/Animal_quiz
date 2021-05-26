@@ -5,12 +5,12 @@ import csv
 
 
 class Start:
-    def __init__(self, parent):
+    def __init__(self):
         # GUI to get starting balance and stakes
         self.start_frame = Frame(padx=10, pady=10)
         self.start_frame.grid()
 
-        starting_number = IntVar(0)
+        starting_balance = IntVar(0)
 
         self.heading_label = Label(self.start_frame,
                                    text="how many questions\n"
@@ -43,7 +43,8 @@ class Start:
         self.question_low_box.config(state=DISABLED)
         self.question_high_box.config(state=DISABLED)
 
-    def check_question_num(self, starting_number, has_errors, error_feeback):
+    def check_question_num(self, starting_number, has_errors, error_feedback):
+
         starting_blalance = self.num_questions_entry.get()
 
         try:
@@ -51,11 +52,11 @@ class Start:
 
             if starting_number < 5:
                 has_errors = "yes"
-                error_feeback = "Sorry, the least amount" \
-                                "amount of question you can do is"
+                error_feedback = "Sorry, the least amount" \
+                                "amount of question you can do is 5"
             elif starting_number > 11:
                 has_errors = "yes"
-                error_feeback = "Too high! you can only do " \
+                error_feedback = "Too high! you can only do " \
                                 "10 questions"
             elif starting_number <= 10:
                 # enable all the buttons
@@ -63,30 +64,30 @@ class Start:
                 self.question_high_box.config(state=NORMAL)
             elif starting_number >= 5:
                 self.question_low_box.config(state=NORMAL)
+                
         except ValueError:
             has_errors = "yes"
             error_feedback = "Please enter amount of question (decimal)"
 
         if has_errors == "yes":
             self.num_questions_entry.config(bg="red")
-            self.amount_error_label.config(text=error_feeback)
+            self.amount_error_label.config(text=error_feedback)
 
         else:
             # set starting balance to amount enterrd by users
-            self.starting_number.set(starting_blalance)
+            self.starting_balance.set(starting_number)
             self.num_questions_entry.config(bg="white")
             self.amount_error_label.config(text="")
 
             Question(starting_number)
 
+    def to_question(self, starting_number):
 
-
-    def to_question(self):
         # retrieve # of questions balance
         question_number = self.num_questions_entry.get()
         print(question_number)
 
-        Question(self, partial)
+        Question(self, starting_number)
 
         # hide start up window
         root.withdraw()
@@ -95,7 +96,9 @@ class Start:
 # the Question function is to show the questions and how they are generated
 # make sure its not going in alphabet order .
 class Question:
-    def __init__(self, starting_number, partial):
+    def __init__(self, starting_number):
+
+        print(starting_number)
 
         self.quiz_box = Toplevel()
         self.quiz_frame = Frame(self.quiz_box)
