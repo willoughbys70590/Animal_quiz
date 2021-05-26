@@ -12,9 +12,6 @@ class Start:
 
         starting_number = IntVar(0)
 
-
-
-
         self.heading_label = Label(self.start_frame,
                                    text="how many questions\n"
                                         "do you want you can\n"
@@ -25,11 +22,11 @@ class Start:
         self.num_questions_entry = Entry(self.start_frame, text="5")
         self.num_questions_entry.grid(row=1, pady=10)
 
-        self.add_funds_button = Button(self.start_frame,
+        self.add_question_button = Button(self.start_frame,
                                        font="Arial 14 bold",
                                        text="Add questions",
                                        command=self.check_question_num)
-        self.add_funds_button.grid(row=2)
+        self.add_question_button.grid(row=2)
 
         self.amount_error_label = Label(self.start_frame, fg="maroon",
                                         text="", font="Arial 10 bold", wrap=275,
@@ -80,6 +77,8 @@ class Start:
             self.num_questions_entry.config(bg="white")
             self.amount_error_label.config(text="")
 
+            Question(starting_number)
+
 
 
     def to_question(self):
@@ -97,12 +96,6 @@ class Start:
 # make sure its not going in alphabet order .
 class Question:
     def __init__(self, starting_number, partial):
-
-
-        # **** initiallise variables ****
-        self.balance = IntVar()
-        # set starting balance to amount entered by user at start of game
-        self.balance.set(starting_number)
 
         self.quiz_box = Toplevel()
         self.quiz_frame = Frame(self.quiz_box)
