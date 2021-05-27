@@ -16,71 +16,11 @@ class Start:
                                    font="arial 10 bold")
         self.heading_label.grid(row=0)
 
-        self.num_questions_entry = Entry(self.start_frame, text="5")
-        self.num_questions_entry.grid(row=1, pady=10)
-
-        self.add_question_button = Button(self.start_frame,
-                                          font="Arial 14 bold",
-                                          text="Add questions",
-                                          command=self.check_question_num)
-        self.add_question_button.grid(row=2)
-
-        self.amount_error_label = Label(self.start_frame, fg="maroon",
-                                        text="", font="Arial 10 bold", wrap=275,
-                                        justify=LEFT)
-        self.amount_error_label.grid(row=3, columnspan=2, pady=5)
-
         self.question_low_box = Button(text="5 question", command= lambda: self.to_question(5))
         self.question_low_box.grid(row=4, pady=10)
 
         self.question_high_box = Button(text="10 question", command= lambda: self.to_question(10))
         self.question_high_box.grid(row=5, pady=10)
-
-        # Disable all the buttons
-        '''
-        self.question_low_box.config(state=DISABLED)
-        self.question_high_box.config(state=DISABLED)
-        '''
-
-    def check_question_num(self):
-
-        has_errors = "no"
-
-        starting_number = self.num_questions_entry.get()
-
-        try:
-            starting_number = int(starting_number)
-
-            if starting_number < 5:
-                has_errors = "yes"
-                error_feedback = "Sorry, the least amount\n" \
-                                 "of question you can do\n" \
-                                 "is 5"
-            elif starting_number > 10:
-                has_errors = "yes"
-
-                error_feedback = "Too high! you can only do\n" \
-                                 " highest of 10 questions"
-            elif starting_number >= 5:
-                # enable all the buttons
-                self.question_low_box.config(state=NORMAL)
-            elif starting_number >= 10:
-                # enable all the buttons
-                self.question_low_box.config(state=NORMAL)
-                self.question_high_box.config(state=NORMAL)
-
-        except ValueError:
-            has_errors = "yes"
-            error_feedback = "Please enter amount of \n" \
-                             "question( no decimal)"
-
-        if has_errors == "yes":
-            self.num_questions_entry.config(bg="red")
-            self.amount_error_label.config(text=error_feedback)
-        else:
-            self.num_questions_entry.config(bg="white")
-            self.amount_error_label.config(text="")
-
 
     def to_question(self, num_questions):
 
@@ -132,6 +72,7 @@ class Question:
                                  font="Arial 19 bold", width=10)
         self.answer_box.grid(row=2, column=0)
 
+        # importing the list function
         with open('animal_list.csv', newline='') as f:
             reader = csv.reader(f)
             animal_list = list(reader)
@@ -140,18 +81,8 @@ class Question:
                                           font="Arial")
         self.correct_answer_label.grid(row=3)
 
-        # next export frame
-        self.next_export_frame = Frame(self.quiz_box)
-        self.next_export_frame.grid(row=4, pady=10, column=0)
-
-        self.next_button = Button(self.next_export_frame, text="next",
-                                  justify=LEFT,
-
-                                  command=lambda: self.make_question(animal_list),
-                                  pady=10, width=10, font="Arial 10 bold")
-        self.next_button.grid(row=4, padx=5)
-
         # Check answer export frame
+        # disable button
         self.Check_answer_export_frame = Frame(self.quiz_box)
         self.Check_answer_export_frame.grid(row=5, pady=10)
 
@@ -161,9 +92,22 @@ class Question:
                                            command=self.check_answer,
                                            padx=10, pady=10)
         self.Check_answer_button.grid(row=5, pady=5)
+        self.Check_answer_button.config(state=DISABLED)
+
+        # next export frame
+        self.next_export_frame = Frame(self.quiz_box)
+        self.next_export_frame.grid(row=4, pady=10, column=0)
+        self.next_button = Button(self.next_export_frame, text="next",
+                                  justify=LEFT,
+                                  command=lambda: self.make_question(animal_list),
+                                  pady=10, width=10, font="Arial 10 bold")
+        self.next_button.grid(row=4, padx=5)
+
 
     def make_question(self, question_list):
-
+        self.next_button.config(state=DISABLED)
+        self.text_box_frame.configure(bg="white")
+        self.Check_answer_button.config(state=NORMAL)
         pair = random.choice(question_list)
         adult = pair[0]
         answer = pair[1]
@@ -177,6 +121,8 @@ class Question:
         # print("answer", answer)
 
     def check_answer(self):
+        self.Check_answer_button.config(state=DISABLED)
+        self.next_button.config(state=NORMAL)
 
         correct_ans = ""
         wrong_ans = ""
@@ -185,7 +131,7 @@ class Question:
         answer = self.a_baby.get()
         print("Check answer:", answer)
 
-        # printing your answaer that you have put in
+        # printing your answer that you have put in
         user_ans = self.answer_box.get()
         print("Your answer:", user_ans)
 
@@ -195,14 +141,10 @@ class Question:
         elif answer != user_ans:
             feedback = "wrong"
             self.answer_box.config(bg="pink")
-
         self.correct_answer_label.config(text=feedback)
 
-    '''
-        self.correct_answer_label = Label(self.quiz_box, text=(correct_ans, wrong_ans),
-                                          font="Arial")
-        self.correct_answer_label.grid(row=3)
-        '''
+    def number_score(self, ):
+        print("score function")
 
 
 # main routine
