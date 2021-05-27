@@ -48,7 +48,7 @@ class GameStats:
         # Starting balance (row 2.0)
 
         self.start_balance_label = Label(self.details_frame,
-                                         text="Starting Balance:", font="arial 15 bold")
+                                         text="how well your doing:", font="arial 15 bold")
         self.start_balance_label.grid(row=0, column=0, padx=0)
 
         # Current balance (row 2.2)
