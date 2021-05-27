@@ -5,12 +5,10 @@ import csv
 
 
 class Start:
-    def __init__(self):
+    def __init__(self, partial):
         # GUI to get starting balance and stakes
         self.start_frame = Frame(padx=10, pady=10)
         self.start_frame.grid()
-
-        starting_balance = IntVar(0)
 
         self.heading_label = Label(self.start_frame,
                                    text="how many questions\n"
@@ -43,51 +41,52 @@ class Start:
         self.question_low_box.config(state=DISABLED)
         self.question_high_box.config(state=DISABLED)
 
-    def check_question_num(self, starting_number, has_errors, error_feedback):
+    def check_question_num(self):
 
-        starting_blalance = self.num_questions_entry.get()
+        has_errors = "no"
+
+        starting_number = self.num_questions_entry.get()
 
         try:
             starting_number = int(starting_number)
 
             if starting_number < 5:
                 has_errors = "yes"
-                error_feedback = "Sorry, the least amount" \
-                                "amount of question you can do is 5"
-            elif starting_number > 11:
+                error_feedback = "Sorry, the least amount\n" \
+                                "of question you can do\n" \
+                                 "is 5"
+            elif starting_number > 10:
                 has_errors = "yes"
-                error_feedback = "Too high! you can only do " \
-                                "10 questions"
+
+                error_feedback = "Too high! you can only do\n" \
+                                " highest of 10 questions"
+            elif starting_number >= 5:
+                # enable all the buttons
+                self.question_low_box.config(state=NORMAL)
             elif starting_number <= 10:
                 # enable all the buttons
                 self.question_low_box.config(state=NORMAL)
                 self.question_high_box.config(state=NORMAL)
-            elif starting_number >= 5:
-                self.question_low_box.config(state=NORMAL)
                 
         except ValueError:
             has_errors = "yes"
-            error_feedback = "Please enter amount of question (decimal)"
+            error_feedback = "Please enter amount of \n" \
+                             "question( no decimal)"
+
 
         if has_errors == "yes":
             self.num_questions_entry.config(bg="red")
             self.amount_error_label.config(text=error_feedback)
 
-        else:
-            # set starting balance to amount enterrd by users
-            self.starting_balance.set(starting_number)
-            self.num_questions_entry.config(bg="white")
-            self.amount_error_label.config(text="")
-
             Question(starting_number)
 
-    def to_question(self, starting_number):
+    def to_question(self):
 
         # retrieve # of questions balance
         question_number = self.num_questions_entry.get()
         print(question_number)
 
-        Question(self, starting_number)
+        Question(self)
 
         # hide start up window
         root.withdraw()
@@ -118,17 +117,17 @@ class Question:
 
         self.question_label = Label(self.quiz_box, text="Push next to begin your first Question",
                                     font="arial 14 bold")
-        self.question_label.grid(row=2)
+        self.question_label.grid(row=1)
 
         # code to import the list and make sure it only says the Adult name not the baby name also
 
         # text box for the answears (row 4)
         self.text_box_frame = Frame(self.quiz_box, width=200)
-        self.text_box_frame.grid(row=4, column=0)
+        self.text_box_frame.grid(row=2, column=0)
 
         self.answear_box = Entry(self.text_box_frame,
                                  font="Arial 19 bold", width=10)
-        self.answear_box.grid(row=4, column=0)
+        self.answear_box.grid(row=2, column=0)
 
         with open('animal_list.csv', newline='') as f:
             reader = csv.reader(f)
@@ -136,24 +135,26 @@ class Question:
 
         # next export frame
         self.next_export_frame = Frame(self.quiz_box)
-        self.next_export_frame.grid(row=5, pady=10, column=0)
+        self.next_export_frame.grid(row=4, pady=10, column=0)
 
         self.next_button = Button(self.next_export_frame, text="next",
                                   justify=LEFT,
+
+
                                   command=lambda: self.make_question(animal_list),
                                   pady=10, width=10, font="Arial 10 bold")
-        self.next_button.grid(row=5, padx=5)
+        self.next_button.grid(row=4, padx=5)
 
         # Check answear export frame
         self.Check_answear_export_frame = Frame(self.quiz_box)
-        self.Check_answear_export_frame.grid(row=6, pady=10)
+        self.Check_answear_export_frame.grid(row=5, pady=10)
 
         self.Check_answear_button = Button(self.Check_answear_export_frame,
                                            text="Check answear",
                                            font="Arial 10 bold",
                                            command=self.check_answer,
                                            padx=10, pady=10)
-        self.Check_answear_button.grid(row=6, pady=5)
+        self.Check_answear_button.grid(row=5, pady=5)
 
     def make_question(self, question_list):
 
@@ -191,7 +192,7 @@ class Question:
 
         self.correct_answer_label = Label(self.quiz_box, text=(correct_ans, wrong_ans),
                                           font="Arial")
-        self.correct_answer_label.grid(row=5)
+        self.correct_answer_label.grid(row=3)
 
 
 # main routine
