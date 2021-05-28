@@ -39,7 +39,9 @@ class Start:
 class Question:
     def __init__(self, num_questions):
 
-        print(num_questions)
+        self.questions = IntVar()
+        # set starting amount of questions that the user put in
+        self.questions.set(num_questions)
 
         self.quiz_box = Toplevel()
         self.quiz_frame = Frame(self.quiz_box)
@@ -105,9 +107,14 @@ class Question:
 
 
     def make_question(self, question_list):
+        # disabling the next button so you can press next to cheat
+        # enabling the chack anser button because you want to know if you go it right or wrong
         self.next_button.config(state=DISABLED)
-        self.text_box_frame.configure(bg="white")
         self.Check_answer_button.config(state=NORMAL)
+
+        # making the user answer box white
+        self.answer_box.config(bg="white")
+
         pair = random.choice(question_list)
         adult = pair[0]
         answer = pair[1]
@@ -121,6 +128,7 @@ class Question:
         # print("answer", answer)
 
     def check_answer(self):
+        # check answer is disabled and then the next button is enabled
         self.Check_answer_button.config(state=DISABLED)
         self.next_button.config(state=NORMAL)
 
@@ -143,9 +151,11 @@ class Question:
             self.answer_box.config(bg="pink")
         self.correct_answer_label.config(text=feedback)
 
-    def number_score(self, ):
-        print("score function")
 
+    def number_score(self):
+        current_questions = self.questions.get()
+
+        round_questions = num_question
 
 # main routine
 if __name__ == "__main__":
