@@ -86,24 +86,28 @@ class Question:
         # Check answer export frame
         # disable button
         self.Check_answer_export_frame = Frame(self.quiz_box)
-        self.Check_answer_export_frame.grid(row=5, pady=10)
+        self.Check_answer_export_frame.grid(row=6, pady=10)
 
         self.Check_answer_button = Button(self.Check_answer_export_frame,
                                            text="Check answer",
                                            font="Arial 10 bold",
                                            command=self.check_answer,
                                            padx=10, pady=10)
-        self.Check_answer_button.grid(row=5, pady=5)
+        self.Check_answer_button.grid(row=6, pady=5)
         self.Check_answer_button.config(state=DISABLED)
 
         # next export frame
         self.next_export_frame = Frame(self.quiz_box)
-        self.next_export_frame.grid(row=4, pady=10, column=0)
+        self.next_export_frame.grid(row=5, pady=10, column=0)
         self.next_button = Button(self.next_export_frame, text="next",
                                   justify=LEFT,
                                   command=lambda: self.make_question(animal_list),
                                   pady=10, width=10, font="Arial 10 bold")
-        self.next_button.grid(row=4, padx=5)
+        self.next_button.grid(row=5, padx=5)
+
+        question = 0
+        self.score_label = Label(self.quiz_box, font="Arial 10 bold",text="Score: {}/{}                          ".format(question, num_questions),wrap=200)
+        self.score_label.grid(row=4, column=0)
 
 
     def make_question(self, question_list):
