@@ -16,19 +16,21 @@ class Start:
                                    font="arial 10 bold")
         self.heading_label.grid(row=0)
 
-        self.question_low_box = Button(text="5 question",                          command= lambda: self.to_question(5))
+        self.question_low_box = Button(text="5 question",
+                                       command= lambda: self.to_question(5))
         self.question_low_box.grid(row=4, pady=10)
 
-        self.question_high_box = Button(text="10 question",                       command= lambda: self.to_question(10))
+        self.question_high_box = Button(text="10 question",
+                                        command= lambda: self.to_question(10))
         self.question_high_box.grid(row=5, pady=10)
 
-    def to_question(self, num_questions, partial):
+    def to_question(self, num_questions):
 
         # retrieve # of questions balance
         # question_number = self.num_questions_entry.get()
         # print(question_number)
 
-        Question(self, partial, num_questions)
+        Question(self, num_questions)
 
         # hide start up window
         root.withdraw()
@@ -37,25 +39,25 @@ class Start:
 # the Question function is to show the questions and how they are generated
 # make sure its not going in alphabet order .
 class Question:
-    def __init__(self, num_questions, partial):
+    def __init__(self, partner, num_questions):
 
-<<<<<<< HEAD
         print(num_questions)
-=======
-        # varibles to hold number of questions needed 
-        #number of questions asked and correct
+
+        # Varibles to hold number of questions needed
+        # number of questions asked and correct
         self.questions = IntVar()
         self.num_asked = IntVar()
         self.num_correct = IntVar()
+        self.num_wrong = IntVar()
 
         # set starting amount to the amount that the 
         # user put in 
-        self.question.set(num_questions)
+        self.questions.set(num_questions)
 
         # intitlise # ask and # correct to zero
         self.num_asked.set(0)
         self.num_correct.set(0)
->>>>>>> 32198f2601e8c39c535c995c6cf42a8919d77574
+        self.num_wrong.set(0)
 
         self.quiz_box = Toplevel()
         self.quiz_frame = Frame(self.quiz_box)
@@ -93,8 +95,13 @@ class Question:
             reader = csv.reader(f)
             animal_list = list(reader)
 
-        self.correct_answer_label = Label(self.quiz_box,                            text="",font="Arial")
+        self.correct_answer_label = Label(self.quiz_box,
+                                          text="",font="Arial")
         self.correct_answer_label.grid(row=3)
+
+        self.score_label = Label(self.quiz_box, font="Arial 10 bold",
+        text="score goes here", wrap=200)
+        self.score_label.grid(row=4, column=0)
 
         # Check answer export frame
         # disable button
@@ -119,10 +126,13 @@ class Question:
         self.next_button.grid(row=5, padx=5)
 
 
+
+
     def make_question(self, question_list):
-        # diabled the next button and then make the check answer enabled
+        # Disabled the next button and then make the check answer enabled
         self.next_button.config(state=DISABLED)
         self.Check_answer_button.config(state=NORMAL)
+        # making the text box made white
         self.text_box_frame.configure(bg="white")
 
 
@@ -138,20 +148,12 @@ class Question:
         # print(adult)
         # print("answer", answer)
 
-<<<<<<< HEAD
+
     def check_answer(self):
-=======
-    def check_answer(self, partial,question_asked, num_asked):
 
         # check answer is disabled and then the next button is enabled
->>>>>>> 32198f2601e8c39c535c995c6cf42a8919d77574
         self.Check_answer_button.config(state=DISABLED)
         self.next_button.config(state=NORMAL)
-
-        # Add 1 to question asked 
-        questions_asked = self.num_asked.get()
-        questions_asked += 1 
-        self.num_asked.set(questions_asked)
 
         correct_ans = ""
         wrong_ans = ""
@@ -171,17 +173,16 @@ class Question:
             feedback = "wrong"
             self.answer_box.config(bg="pink")
         self.correct_answer_label.config(text=feedback)
-<<<<<<< HEAD
 
-    def number_score(self, ):
-        print("score function")
+        # Add 1 to question asked
+        num_correct = self.num_asked.get()
+        num_correct += 1
+        self.num_asked.set(num_correct)
 
-=======
-        
-        self.score_label = Label(self.quiz_box, font="Arial 10 bold", 
-        text="Score: 0/{}".format(question_asked),wrap=200)
-        self.score_label.grid(row=4, column=0)
->>>>>>> 32198f2601e8c39c535c995c6cf42a8919d77574
+        self.score_label.config(text="{} /".format(num_correct))
+
+
+
 
 # main routine
 if __name__ == "__main__":
