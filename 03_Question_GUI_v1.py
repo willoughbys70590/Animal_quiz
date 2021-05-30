@@ -54,10 +54,10 @@ class Question:
     def __init__(self, starting_number):
 
         # **** initiallise variables ****
-        self.balance = IntVar()
-        # set starting balance to amount entered by user at start of game
-        self.balance.set(starting_number)
-
+        self.questions = IntVar()
+        self.num_asked = IntVar()
+        self.num_correct = IntVar()
+        
         self.quiz_box = Toplevel()
         self.quiz_frame = Frame(self.quiz_box)
         self.quiz_frame.grid()
