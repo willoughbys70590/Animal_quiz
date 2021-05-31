@@ -149,7 +149,7 @@ class Question:
         # print("answer", answer)
 
 
-    def check_answer(self):
+    def check_answer(self, questions):
 
         # check answer is disabled and then the next button is enabled
         self.Check_answer_button.config(state=DISABLED)
@@ -179,7 +179,7 @@ class Question:
         num_correct += 1
         self.num_asked.set(num_correct)
 
-        self.score_label.config(text="{} /".format(num_correct))
+        self.score_label.config(text="{} / {}".format(num_correct, questions))
 
 
 
