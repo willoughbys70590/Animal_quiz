@@ -157,18 +157,15 @@ class Question:
         # making the box go back to white
         self.text_box_frame.configure(bg="white")
 
+        # Dont add to question asked
+        num_wrong = self.num_asked.get()
+        num_wrong -= 0
+        self.num_asked.set(num_wrong)
 
         # Add 1 to question asked
         num_correct = self.num_asked.get()
         num_correct += 1
         self.num_asked.set(num_correct)
-
-        # Takeaway 1 to question asked
-        num_wrong = self.num_asked.get()
-        num_wrong -= 1
-        self.num_asked.set(num_wrong)
-
-        number_set = num_correct, num_wrong
 
         correct_ans = ""
         wrong_ans = ""
@@ -179,8 +176,9 @@ class Question:
 
         # printing your answer that you have put in
         user_ans = self.answer_box.get()
-        print("Your answer:{}", user_ans)
+        print("Your answer:", user_ans)
         # print out if answer is correct or id answer is wrong
+
         if answer == user_ans:
             feedback = "correct"
             self.answer_box.config(bg="green")
@@ -193,9 +191,13 @@ class Question:
         user_question = self.questions.get()
 
         # the score label to make sure that
-        self.score_label.config(text="{} / {}".format(number_set, user_question))
+        self.score_label.config(text="{} / {}".format(1 * num_correct, user_question))
 
+        if num_correct  >= 10:
 
+            self.next_button.config(state=DISABLED)
+            self.quiz_box.focus()
+            self.next_button.config(text="Quiz over")
 
 
 # main routine
