@@ -149,11 +149,26 @@ class Question:
         # print("answer", answer)
 
 
-    def check_answer(self, questions):
+    def check_answer(self):
 
         # check answer is disabled and then the next button is enabled
         self.Check_answer_button.config(state=DISABLED)
         self.next_button.config(state=NORMAL)
+        # making the box go back to white
+        self.text_box_frame.configure(bg="white")
+
+
+        # Add 1 to question asked
+        num_correct = self.num_asked.get()
+        num_correct += 1
+        self.num_asked.set(num_correct)
+
+        # Takeaway 1 to question asked
+        num_wrong = self.num_asked.get()
+        num_wrong -= 1
+        self.num_asked.set(num_wrong)
+
+        number_set = num_correct, num_wrong
 
         correct_ans = ""
         wrong_ans = ""
@@ -164,8 +179,8 @@ class Question:
 
         # printing your answer that you have put in
         user_ans = self.answer_box.get()
-        print("Your answer:", user_ans)
-
+        print("Your answer:{}", user_ans)
+        # print out if answer is correct or id answer is wrong
         if answer == user_ans:
             feedback = "correct"
             self.answer_box.config(bg="green")
@@ -174,12 +189,11 @@ class Question:
             self.answer_box.config(bg="pink")
         self.correct_answer_label.config(text=feedback)
 
-        # Add 1 to question asked
-        num_correct = self.num_asked.get()
-        num_correct += 1
-        self.num_asked.set(num_correct)
+        # Getting the amount of question that the user put in and making it go into the score bit
+        user_question = self.questions.get()
 
-        self.score_label.config(text="{} / {}".format(num_correct, questions))
+        # the score label to make sure that
+        self.score_label.config(text="{} / {}".format(number_set, user_question))
 
 
 
