@@ -6,7 +6,7 @@ import csv
 
 # The start function is to show the title of the quiz little instructions  and a start button
 class Start:
-    def __init__(self):
+    def __init__(self, partial):
         # Make the starting frame and how wide and height is going to be
         self.start_frame = Frame(padx=15, pady=15)
         self.start_frame.grid()
@@ -52,30 +52,13 @@ class Start:
                                   justify="left")
         self.quit_button.grid(row=5, pady=10, column=0)
 
-        self.heading_label = Label(self.start_frame,
-                                   text="how many questions\n"
-                                        "do you want you can\n"
-                                        "only pick between 5&10.",
-                                   font="arial 10 bold")
-        self.heading_label.grid(row=0)
-
-        self.question_low_box = Button(text="5 question",
-                                       command=lambda: self.to_question(5))
-        self.question_low_box.grid(row=4, pady=10)
-
-        self.question_high_box = Button(text="10 question",
-                                        command=lambda: self.to_question(10))
-        self.question_high_box.grid(row=5, pady=10)
-
 
     def to_question(self, num_questions, start_quiz_button):
         # retrieve # of questions balance
         question_number = self.num_questions.get()
         print(question_number)
 
-
-
-        Question(self, num_questions)
+        Question(self, num_questions, start_quiz_button)
 
         # hide start up window
         root.withdraw()
@@ -85,55 +68,11 @@ class Start:
 
     def to_help(self):
         get_help = Help(self)
-# This is the Help / Instructions button where they can find out what
-# To if they get stuck.
-class Help:
-    def __init__(self, partner):
-        # disable help button
-        partner.help_button.config(state=DISABLED)
-
-        # Set up child window (ie: help box)
-        self.help_box = Toplevel()
-
-        # if users cross at top, closes help and 'releases' help button
-        self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, partner))
-
-        # Set up GUI frame
-        self.start_frame = Frame(self.help_box, width=100)
-        self.start_frame.grid()
-
-        # Set up help heading (row 0 )
-        self.how_heading = Label(self.start_frame, text="Help / Instructions",
-                                 font="arial 14 bold")
-        self.how_heading.grid(row=0)
-
-        help_text = "To start the quiz first you need to press the satrt button." \
-                    "After you have pressed the start button you will then have to" \
-                    "answear the question. The Adult annimal name will keep " \
-                    "changing so you will need to keep finding out what the baby name" \
-                    "is. You will only get 5 turns."
-
-        # Help text (label, row 1)
-        self.help_text = Label(self.start_frame, text=help_text,
-                               justify=LEFT, wrap=400, padx=10, pady=10)
-        self.help_text.grid(row=1)
-
-        # Dismiss button (row2)
-        self.dismiss_btn = Button(self.start_frame, text="Dismiss",
-                                  width=10, bg="#660000", fg="white",
-                                  font="arial 15 bold",
-                                  command=partial(self.close_help, partner))
-        self.dismiss_btn.grid(row=2, pady=10)
-
-    def close_help(self, partner):
-        # Put help button back to normal...
-        partner.help_button.config(state=NORMAL)
-        self.help_box.destroy()
 
 # the Question function is to show the questions and how they are generated
 # make sure its not going in alphabet order .
 class Question:
-    def __init__(self, partner, num_questions):
+    def __init__(self, partner, num_questions, start_quiz_button):
 
         print(num_questions)
 
@@ -286,6 +225,53 @@ class Question:
             self.next_button.config(state=DISABLED)
             self.quiz_box.focus()
             self.next_button.config(text="Quiz over")
+
+# This is the Help / Instructions button where they can find out what
+# To if they get stuck.
+class Help:
+    def __init__(self, partner):
+        # disable help button
+        partner.help_button.config(state=DISABLED)
+
+        # Set up child window (ie: help box)
+        self.help_box = Toplevel()
+
+        # if users cross at top, closes help and 'releases' help button
+        self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, partner))
+
+        # Set up GUI frame
+        self.start_frame = Frame(self.help_box, width=100)
+        self.start_frame.grid()
+
+        # Set up help heading (row 0 )
+        self.how_heading = Label(self.start_frame, text="Help / Instructions",
+                                 font="arial 14 bold")
+        self.how_heading.grid(row=0)
+
+        help_text = "To start the quiz first you need to press the satrt button." \
+                    "After you have pressed the start button you will then have to" \
+                    "answear the question. The Adult annimal name will keep " \
+                    "changing so you will need to keep finding out what the baby name" \
+                    "is. You will only get 5 turns."
+
+        # Help text (label, row 1)
+        self.help_text = Label(self.start_frame, text=help_text,
+                               justify=LEFT, wrap=400, padx=10, pady=10)
+        self.help_text.grid(row=1)
+
+        # Dismiss button (row2)
+        self.dismiss_btn = Button(self.start_frame, text="Dismiss",
+                                  width=10, bg="#660000", fg="white",
+                                  font="arial 15 bold",
+                                  command=partial(self.close_help, partner))
+        self.dismiss_btn.grid(row=2, pady=10)
+
+    def close_help(self, partner):
+        # Put help button back to normal...
+        partner.help_button.config(state=NORMAL)
+        self.help_box.destroy()
+
+
 
 
 # main routine

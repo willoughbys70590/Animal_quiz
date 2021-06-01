@@ -68,7 +68,7 @@ class Question:
 
         # The heading row to play the quiz
         self.heading_label = Label(self.quiz_box, text="Time to start the quiz on how well you know\n"
-         " whats the name of the baby animals is.",
+                                    " whats the name of the baby animals is.",
                                    font="Arial 10", padx=15, pady=15)
         self.heading_label.grid(row=0)
 
@@ -129,11 +129,14 @@ class Question:
 
 
     def make_question(self, question_list):
+
         # Disabled the next button and then make the check answer enabled
+
         self.next_button.config(state=DISABLED)
         self.Check_answer_button.config(state=NORMAL)
+
         # making the text box made white
-        self.text_box_frame.configure(bg="white")
+        self.answer_box.config(bg="white")
 
 
         pair = random.choice(question_list)
@@ -151,24 +154,30 @@ class Question:
 
     def check_answer(self):
 
-        # check answer is disabled and then the next button is enabled
+        # check answer is disabled and then the next button is
+        # enabled (only if the quiz is not yet over)
         self.Check_answer_button.config(state=DISABLED)
         self.next_button.config(state=NORMAL)
-        # making the box go back to white
-        self.text_box_frame.configure(bg="white")
 
-        # Dont add to question asked
-        num_wrong = self.num_asked.get()
-        num_wrong -= 0
-        self.num_asked.set(num_wrong)
+        Question_wanted = self.num_asked.get()
+        Question_needed = self.questions.get()
+
+        if Question_wanted != Question_needed:
+            self.next_button.config(state=NORMAL)
+        elif Question_needed == Question_wanted:
+            self.next_button.config(state=DISABLED)
+            self.quiz_box.focus()
+            self.next_button.config(text="Quiz over")
+
+        # If the quiz is over, disable the next button and change the text to say 'quiz over'
+        self.Check_answer_button.config(state=DISABLED)
+        self.next_button.config(state=NORMAL)
+
+        # making the text box go back to white
+        self.answer_box.config(text="")
 
         # Add 1 to question asked
         num_correct = self.num_asked.get()
-        num_correct += 1
-        self.num_asked.set(num_correct)
-
-        correct_ans = ""
-        wrong_ans = ""
 
         # The real answer from my csv list
         answer = self.a_baby.get()
@@ -182,6 +191,8 @@ class Question:
         if answer == user_ans:
             feedback = "correct"
             self.answer_box.config(bg="green")
+            num_correct += 1
+            self.num_asked.set(num_correct)
         elif answer != user_ans:
             feedback = "wrong"
             self.answer_box.config(bg="pink")
@@ -192,13 +203,6 @@ class Question:
 
         # the score label to make sure that
         self.score_label.config(text="{} / {}".format(1 * num_correct, user_question))
-
-        if num_correct  >= 10:
-
-            self.next_button.config(state=DISABLED)
-            self.quiz_box.focus()
-            self.next_button.config(text="Quiz over")
-
 
 # main routine
 if __name__ == "__main__":
