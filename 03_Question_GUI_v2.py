@@ -48,8 +48,6 @@ class Question:
         self.questions = IntVar()
         self.num_asked = IntVar()
         self.num_correct = IntVar()
-        self.num_wrong = IntVar()
-
         # set starting amount to the amount that the 
         # user put in 
         self.questions.set(num_questions)
@@ -57,7 +55,6 @@ class Question:
         # intitlise # ask and # correct to zero
         self.num_asked.set(0)
         self.num_correct.set(0)
-        self.num_wrong.set(0)
 
         self.quiz_box = Toplevel()
         self.quiz_frame = Frame(self.quiz_box)
@@ -159,27 +156,22 @@ class Question:
         self.Check_answer_button.config(state=DISABLED)
         self.next_button.config(state=NORMAL)
 
-        Question_wanted = self.num_asked.get()
-        Question_needed = self.questions.get()
+        asked = self.num_asked.get()
+        asked += 1
+        self.num_asked.set(asked)
+        user_questions = self.questions.get()
+        num_correct = self.num_correct.get()
 
-        if Question_wanted != Question_needed:
-            self.next_button.config(state=NORMAL)
-        elif Question_needed == Question_wanted:
+        if asked >= user_questions:
             self.next_button.config(state=DISABLED)
             self.quiz_box.focus()
             self.next_button.config(text="Quiz over")
 
-        # If the quiz is over, disable the next button and change the text to say 'quiz over'
-        self.Check_answer_button.config(state=DISABLED)
-        self.next_button.config(state=NORMAL)
-
         # making the text box go back to white
         self.answer_box.config(text="")
 
-        # Add 1 to question asked
-        num_correct = self.num_asked.get()
-
         # The real answer from my csv list
+
         answer = self.a_baby.get()
         print("Check answer:", answer)
 
@@ -198,11 +190,11 @@ class Question:
             self.answer_box.config(bg="pink")
         self.correct_answer_label.config(text=feedback)
 
-        # Getting the amount of question that the user put in and making it go into the score bit
-        user_question = self.questions.get()
-
         # the score label to make sure that
-        self.score_label.config(text="{} / {}".format(1 * num_correct, user_question))
+        self.score_label.config(text="{} / {}".format(1 * num_correct, user_questions))
+
+
+
 
 # main routine
 if __name__ == "__main__":
