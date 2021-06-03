@@ -11,24 +11,25 @@ class Start:
         self.start_frame = Frame(padx=15, pady=15)
         self.start_frame.grid()
 
-        # Animal quiz heading, make sure its in the center,text size is readerable and colour
+        # Animal quiz heading, make sure its in the center,text size is readable and colour
         # Heading in row 0
         self.Animal_quiz_label = Label(self.start_frame,
                                        text="Animal Quiz",
                                        font="Arial 20 bold")
         self.Animal_quiz_label.grid(row=0)
+
         self.heading_label = Label(self.start_frame,
                                    text="how many questions\n"
                                         "do you want you can\n"
-                                        "only pick between 5&10.",
+                                        "only pick 5 or 10.",
                                    font="arial 10 bold")
         self.heading_label.grid(row=1)
 
-        self.question_low_box = Button(text="5 question",
+        self.question_low_box = Button(self.start_frame, text="5 question",
                                        command=lambda: self.to_question(5))
         self.question_low_box.grid(row=2, pady=10)
 
-        self.question_high_box = Button(text="10 question",
+        self.question_high_box = Button(self.start_frame, text="10 question",
                                         command=lambda: self.to_question(10))
         self.question_high_box.grid(row=3, pady=10)
 
@@ -40,14 +41,14 @@ class Start:
                                   font="Arial 15 bold"
                                   , command=self.to_help,
                                   pady=10, width=10)
-        self.help_button.grid(row=4, column=1)
+        self.help_button.grid(row=0, column=1)
 
         # Quit button
         self.quit_button = Button(self.help_export_frame, text="Quit", fg="white",
                                   bg="#660000", font="Arial 15 bold",
                                   command=self.to_quit, pady=10, width=10,
                                   justify="left")
-        self.quit_button.grid(row=4, pady=10, column=0)
+        self.quit_button.grid(row=0, pady=10, column=0)
 
 
     def to_question(self, num_questions):
