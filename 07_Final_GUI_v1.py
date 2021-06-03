@@ -246,11 +246,11 @@ class Help:
                                  font="arial 14 bold")
         self.how_heading.grid(row=0)
 
-        help_text = "To start the quiz first you need to press the satrt button." \
-                    "After you have pressed the start button you will then have to" \
-                    "answear the question. The Adult annimal name will keep " \
-                    "changing so you will need to keep finding out what the baby name" \
-                    "is. You will only get 5 turns."
+        help_text = "To start the quiz you will need\n" \
+                    " to first pick how many questions \n" \
+                    "you would  like 5 or 10. Then once\n " \
+                    "you have done that it will take you\n" \
+                    " start answering the questions."
 
         # Help text (label, row 1)
         self.help_text = Label(self.start_frame, text=help_text,
