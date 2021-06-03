@@ -194,8 +194,6 @@ class Question:
         self.score_label.config(text="{} / {}".format( 1 * num_correct, user_questions))
 
 
-
-
 # main routine
 if __name__ == "__main__":
     root = Tk()

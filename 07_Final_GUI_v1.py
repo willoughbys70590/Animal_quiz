@@ -199,7 +199,7 @@ class Question:
             self.next_button.config(text="Quiz over")
 
         # making the text box go back to white
-        self.answer_box.config(text="")
+        self.answer_box.config(text=" ")
 
         # The real answer from my csv list
 
@@ -215,14 +215,15 @@ class Question:
             feedback = "correct"
             self.answer_box.config(bg="green")
             num_correct += 1
-            self.num_asked.set(num_correct)
+            self.num_correct.set(num_correct)
         elif answer != user_ans:
             feedback = "wrong"
             self.answer_box.config(bg="pink")
         self.correct_answer_label.config(text=feedback)
 
         # the score label to make sure that
-        self.score_label.config(text="{} / {}".format(1 * num_correct, user_questions))
+        self.score_label.config(text="{} / {}".format( 1 * num_correct, user_questions))
+
 
 # This is the Help / Instructions button where they can find out what
 # To if they get stuck.
@@ -272,7 +273,6 @@ class Help:
 # main routine
 if __name__ == "__main__":
     root = Tk()
-
     root.title("Animal_Quiz")
     something = Start(root)
     root.mainloop()
